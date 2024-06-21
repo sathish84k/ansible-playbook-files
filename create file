@@ -1,0 +1,35 @@
+---
+- name: File Operations
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Create a file
+      file:
+        path: /home/ansible/message.txt
+        state: touch
+
+    - name: Write data to file
+      blockinfile:
+        path: /home/ansible/message.txt
+        block: |
+          This is MESSAGE from Raghu.
+
+    - name: Copy file to Host location
+      copy:
+        src: /home/ansible/cp_message.txt
+        dest: /home/ansible/cp_message.txt
+
+    - name: Append data to file
+      lineinfile:
+        path: /home/ansible/message.txt
+        line: |
+          This is additional Message from RAGHU.
+
+    - name: Rename an existing file
+      command: mv /home/ansible/message.txt /home/ansible/newmessage.txt
+
+    - name: Delete file
+      file:
+        path: /home/ansible/newmessage.txt
+        state: absent
